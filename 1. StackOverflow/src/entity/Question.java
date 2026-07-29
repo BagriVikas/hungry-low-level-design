@@ -5,15 +5,16 @@ import enums.EventType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 public class Question extends Post {
 
     private final String title;
-    private final List<Tag> tags;
+    private final Set<Tag> tags;
     private final List<Answer> answers;
     private Answer acceptedAnswer;
 
-    public Question (String title, String body, User author, List<Tag> tags) {
+    public Question (String title, String body, User author, Set<Tag> tags) {
         super(body, author);
         this.title = title;
         this.tags = tags;
@@ -41,7 +42,7 @@ public class Question extends Post {
         return title;
     }
 
-    public List<Tag> getTags() {
+    public Set<Tag> getTags() {
         return tags;
     }
 

@@ -1,0 +1,6 @@
+1.  In Question entity, while accepting an answer, we should be setting 'this.getActor()'(as he is
+performing the action of accepting an answer) as 'actor' instead of 'answer.getAuthor()'.
+
+2. We should be defining 'equal' and 'hashcode' methods for 'Tag' class as we are creating a set
+for it in the 'Question' entity. Also it will help us while filtering questions based on the tag
+provided.
