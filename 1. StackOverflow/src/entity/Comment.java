@@ -1,9 +1,11 @@
 package entity;
 
+import java.util.UUID;
+
 public class Comment extends Content {
 
     public Comment(String body, User author) {
-        super(body, author);
+        super(UUID.randomUUID().toString(), body, author);
     }
 
 }

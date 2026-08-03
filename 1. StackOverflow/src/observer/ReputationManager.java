@@ -10,6 +10,7 @@ public class ReputationManager implements PostObserver{
     private static final int ACCEPT_ANSWER_REP = 15;
     private static final int DOWNVOTED_POST_AUTHOR_PENALTY = -2;
     private static final int DOWNVOTER_PENALTY = -1;
+    private static final int UNACCEPT_ANSWER_REP_PENALTY = -1 * ACCEPT_ANSWER_REP;
 
     @Override
     public void onPostEvent(Event event) {
@@ -27,6 +28,9 @@ public class ReputationManager implements PostObserver{
                 break;
             case ACCEPT_ANSWER:
                 event.getTargetPost().getAuthor().updateReputation(ACCEPT_ANSWER_REP);
+                break;
+            case UNACCEPT_ANSWER:
+                event.getTargetPost().getAuthor().updateReputation(UNACCEPT_ANSWER_REP_PENALTY);
                 break;
         }
 

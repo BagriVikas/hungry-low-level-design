@@ -14,4 +14,5 @@ public enum VoteType {
     public int getVal() {
         return val;
     }
+
 }

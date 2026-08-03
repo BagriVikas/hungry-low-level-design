@@ -10,8 +10,8 @@ public abstract class Content {
     protected final User author;
     protected final LocalDateTime creationDate;
 
-    public Content(String body, User author) {
-        this.id = UUID.randomUUID().toString();
+    public Content(String id, String body, User author) {
+        this.id = id;
         this.body = body;
         this.author = author;
         this.creationDate = LocalDateTime.now();

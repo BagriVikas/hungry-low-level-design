@@ -4,3 +4,6 @@ performing the action of accepting an answer) as 'actor' instead of 'answer.getA
 2. We should be defining 'equal' and 'hashcode' methods for 'Tag' class as we are creating a set
 for it in the 'Question' entity. Also it will help us while filtering questions based on the tag
 provided.
+
+3. User should not be able to vote on his own post (Question or Answer).
+   Missing validation in the 'vote' method of the 'Post' entity.

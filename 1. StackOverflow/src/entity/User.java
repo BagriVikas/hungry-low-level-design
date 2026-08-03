@@ -23,7 +23,7 @@ public class User {
         return name;
     }
 
-    private int getReputation() {
+    public int getReputation() {
         return reputation.get();
     }
 

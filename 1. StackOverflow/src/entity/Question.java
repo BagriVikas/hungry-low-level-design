@@ -2,10 +2,7 @@ package entity;
 
 import enums.EventType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 public class Question extends Post {
 
@@ -15,7 +12,7 @@ public class Question extends Post {
     private Answer acceptedAnswer;
 
     public Question (String title, String body, User author, Set<Tag> tags) {
-        super(body, author);
+        super(UUID.randomUUID().toString(), body, author);
         this.title = title;
         this.tags = tags;
         answers = new ArrayList<>();
@@ -27,13 +24,27 @@ public class Question extends Post {
 
     public void setAcceptedAnswer (Answer acceptedAnswer) {
 
-        // answer cannot be accepted if:
-        // 1. both question and answer have the same author
-        // 2. some other answer was already accepted before
-        if (!this.getAuthor().getId().equals(acceptedAnswer.getAuthor().getId()) && null == this.acceptedAnswer) {
-            this.acceptedAnswer = acceptedAnswer;
-            acceptedAnswer.setAccepted(true);
+        // answer should be a part of 'this' question
+        boolean isAnswerOfQuestion = false;
+        for (Answer answer: answers) {
+            if (answer.getId().equals(acceptedAnswer.getId())) {
+                isAnswerOfQuestion = true;
+                break;
+            }
+        }
+        if (!isAnswerOfQuestion) {
+            return;
+        }
+        Answer previousAcceptedAnswer = this.acceptedAnswer;
+        this.acceptedAnswer = acceptedAnswer;
+        acceptedAnswer.setAccepted(true);
+        if (!acceptedAnswer.getAuthor().getId().equals(this.getAuthor().getId())) {
             notifyObservers(new Event(EventType.ACCEPT_ANSWER, this.author, this.acceptedAnswer));
+        }
+        if (null != previousAcceptedAnswer) {
+            // unaccept previously accepted answer
+            previousAcceptedAnswer.setAccepted(false);
+            notifyObservers(new Event(EventType.UNACCEPT_ANSWER, this.author, previousAcceptedAnswer));
         }
 
     }

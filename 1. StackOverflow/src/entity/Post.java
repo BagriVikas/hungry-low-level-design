@@ -17,8 +17,8 @@ public class Post extends Content {
     private final List<Comment> comments = new ArrayList<>();
     private final List<PostObserver> observers = new ArrayList<>();
 
-    public Post(String body, User author) {
-        super(body, author);
+    public Post(String id, String body, User author) {
+        super(id, body, author);
     }
 
     public void addObserver(PostObserver postObserver) {
@@ -31,6 +31,10 @@ public class Post extends Content {
 
     public void vote(User voter, VoteType voteType) {
 
+        if (this.getAuthor().getId().equals(voter.getId())) {
+            // user cannot vote on his own post
+            return;
+        }
         if (voters.get(voter.getId()) == voteType) {
             // already voted same
             return;
@@ -58,6 +62,10 @@ public class Post extends Content {
         }
         notifyObservers(new Event(eventType, voter, this));
 
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
     }
 
 }
