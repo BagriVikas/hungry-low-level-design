@@ -1,4 +1,4 @@
-package strategy;
+package strategy.search;
 
 import entity.Question;
 import entity.User;

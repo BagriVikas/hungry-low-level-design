@@ -1,9 +1,21 @@
-1.  In Question entity, while accepting an answer, we should be setting 'this.getActor()'(as he is
-performing the action of accepting an answer) as 'actor' instead of 'answer.getAuthor()'.
+1. In Question entity, while accepting an answer, we should be setting 'this.getActor()'(as he is
+   performing the action of accepting an answer) as 'actor' instead of 'answer.getAuthor()'.
 
 2. We should be defining 'equal' and 'hashcode' methods for 'Tag' class as we are creating a set
-for it in the 'Question' entity. Also it will help us while filtering questions based on the tag
-provided.
+   for it in the 'Question' entity. Also it will help us while filtering questions based on the tag
+   provided.
 
 3. User should not be able to vote on his own post (Question or Answer).
    Missing validation in the 'vote' method of the 'Post' entity.
+
+4. Change some validation for 'acceptAnswer' method of 'Question' entity class
+   Now,
+   a. User can accept his own answer also (no increase in reputation)
+   b. Accepted answer gets ACCEPT_ANSWER_REP reputation points
+   c. Unaccepted answer gets UNACCEPT_ANSWER_REP_PENALTY reputation points penalty
+
+5. Client should not be worried about how to create an object of 'Tag' class.
+   He just has to pass strings of tag and the 'StackOverflowService' class
+   should be responsible to instantiate the objects for Tag class.
+
+6. User factory to initialize objects for different types of search strategies.

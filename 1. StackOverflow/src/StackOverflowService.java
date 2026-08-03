@@ -1,11 +1,12 @@
 import entity.*;
 import enums.VoteType;
+import factory.SearchStrategyFactory;
 import observer.PostObserver;
 import observer.ReputationManager;
-import strategy.KeywordSearchStrategy;
-import strategy.SearchStrategy;
-import strategy.TagSearchStrategy;
-import strategy.UserSearchStrategy;
+import strategy.search.KeywordSearchStrategy;
+import strategy.search.SearchStrategy;
+import strategy.search.TagSearchStrategy;
+import strategy.search.UserSearchStrategy;
 
 import java.util.*;
 
@@ -32,10 +33,14 @@ public class StackOverflowService {
     }
 
     public Question postQuestion(String userId, String title,
-                                 String body, Set<Tag> tags) {
+                                 String body, List<String> tags) {
 
         User author = users.get(userId);
-        Question question = new Question(title, body, author, tags);
+        Set<Tag> tagsSet = new HashSet<>();
+        for (String tag: tags) {
+            tagsSet.add(new Tag(tag));
+        }
+        Question question = new Question(title, body, author, tagsSet);
         question.addObserver(reputationManager);
         questions.put(question.getId(), question);
         return question;
@@ -80,24 +85,26 @@ public class StackOverflowService {
 
     public List<Question> searchQuestionsByKeyword(String keyword) {
 
-        SearchStrategy questionsByKeywordStrategy = new KeywordSearchStrategy(keyword);
-        return questionsByKeywordStrategy.filter((List<Question>) questions.values());
+        SearchStrategy questionsByKeywordStrategy = SearchStrategyFactory.getKeywordSearchStrategy(keyword);
+        List<Question> allQuestions = new ArrayList<>(questions.values());
+        return questionsByKeywordStrategy.filter(allQuestions);
 
     }
 
     public List<Question> searchQuestionsByTag(String tag) {
 
-        Tag tagObj = new Tag(tag);
-        SearchStrategy questionsByTagStrategy = new TagSearchStrategy(tagObj);
-        return questionsByTagStrategy.filter((List<Question>) questions.values());
+        SearchStrategy questionsByTagStrategy = SearchStrategyFactory.getTagSearchStrategy(new Tag(tag));
+        List<Question> allQuestions = new ArrayList<>(questions.values());
+        return questionsByTagStrategy.filter(allQuestions);
 
     }
 
     public List<Question> searchQuestionsByUser(String userId) {
 
         User author = users.get(userId);
-        SearchStrategy questionsByUserStrategy = new UserSearchStrategy(author);
-        return questionsByUserStrategy.filter((List<Question>) questions.values());
+        SearchStrategy questionsByUserStrategy = SearchStrategyFactory.getUserSearchStrategy(author);
+        List<Question> allQuestions = new ArrayList<>(questions.values());
+        return questionsByUserStrategy.filter(allQuestions);
 
     }
 

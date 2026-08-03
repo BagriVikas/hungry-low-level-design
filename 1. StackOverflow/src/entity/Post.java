@@ -29,6 +29,10 @@ public class Post extends Content {
         observers.forEach(obs -> obs.onPostEvent(event));
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
     public void vote(User voter, VoteType voteType) {
 
         if (this.getAuthor().getId().equals(voter.getId())) {
