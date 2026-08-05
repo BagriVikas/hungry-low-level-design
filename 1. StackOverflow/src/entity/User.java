@@ -7,7 +7,7 @@ public class User {
 
     private final String id;
     private final String name;
-    private final AtomicInteger reputation;
+    private final AtomicInteger reputation; // thread safe integer
 
     public User(String name) {
         this.id = UUID.randomUUID().toString();

@@ -8,14 +8,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Post extends Content {
 
-    private int voteCount = 0;
-    private final Map<String, VoteType> voters = new HashMap<>();
-    private final List<Comment> comments = new ArrayList<>();
-    private final List<PostObserver> observers = new ArrayList<>();
+    private AtomicInteger voteCount = new AtomicInteger(0);
+    private final Map<String, VoteType> voters = new ConcurrentHashMap<>();
+    private final List<Comment> comments = new CopyOnWriteArrayList<>();
+    private final List<PostObserver> observers = new CopyOnWriteArrayList<>();
 
     public Post(String id, String body, User author) {
         super(id, body, author);
@@ -58,7 +60,7 @@ public class Post extends Content {
         }
 
         voters.put(voter.getId(), voteType);
-        voteCount += voteChange;
+        voteCount.addAndGet(voteChange);
 
         // emit appropriate event so that observers can perform the necessary actions
         // 4 possible vote events: UPVOTE_QUESTION, UPVOTE_ANSWER, DOWNVOTE_QUESTION, DOWNVOTE_ANSWER

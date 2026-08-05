@@ -6,6 +6,7 @@ import observer.ReputationManager;
 import strategy.search.SearchStrategy;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 // should not contain any synchronized method
 // as we should allow client to call our method
@@ -18,9 +19,9 @@ public class StackOverflowService {
     private final PostObserver reputationManager;
 
     public StackOverflowService() {
-        users = new HashMap<>();
-        questions = new HashMap<>();
-        answers = new HashMap<>();
+        users = new ConcurrentHashMap<>();
+        questions = new ConcurrentHashMap<>();
+        answers = new ConcurrentHashMap<>();
         reputationManager = new ReputationManager();
     }
 

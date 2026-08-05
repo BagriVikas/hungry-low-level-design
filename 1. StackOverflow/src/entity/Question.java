@@ -3,19 +3,19 @@ package entity;
 import enums.EventType;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Question extends Post {
 
     private final String title;
     private final Set<Tag> tags;
-    private final List<Answer> answers;
+    private final List<Answer> answers = new CopyOnWriteArrayList<>();
     private Answer acceptedAnswer;
 
     public Question (String title, String body, User author, Set<Tag> tags) {
         super(UUID.randomUUID().toString(), body, author);
         this.title = title;
         this.tags = tags;
-        answers = new ArrayList<>();
     }
 
     public void addAnswer (Answer answer) {
