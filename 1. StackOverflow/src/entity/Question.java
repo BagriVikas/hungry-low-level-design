@@ -22,7 +22,7 @@ public class Question extends Post {
         answers.add(answer);
     }
 
-    public void setAcceptedAnswer (Answer acceptedAnswer) {
+    public synchronized void setAcceptedAnswer (Answer acceptedAnswer) {
 
         // answer should be a part of 'this' question
         boolean isAnswerOfQuestion = false;
@@ -38,7 +38,10 @@ public class Question extends Post {
         Answer previousAcceptedAnswer = this.acceptedAnswer;
         this.acceptedAnswer = acceptedAnswer;
         acceptedAnswer.setAccepted(true);
+        // following if block may work inappropriately in a multithread environment
         if (!acceptedAnswer.getAuthor().getId().equals(this.getAuthor().getId())) {
+            // emit appropriate event only when the authors of both answer
+            // and the question are the different person
             notifyObservers(new Event(EventType.ACCEPT_ANSWER, this.author, this.acceptedAnswer));
         }
         if (null != previousAcceptedAnswer) {

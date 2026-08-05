@@ -3,13 +3,13 @@ import enums.VoteType;
 import factory.SearchStrategyFactory;
 import observer.PostObserver;
 import observer.ReputationManager;
-import strategy.search.KeywordSearchStrategy;
 import strategy.search.SearchStrategy;
-import strategy.search.TagSearchStrategy;
-import strategy.search.UserSearchStrategy;
 
 import java.util.*;
 
+// should not contain any synchronized method
+// as we should allow client to call our method
+// from a multithread environment
 public class StackOverflowService {
 
     private final Map<String, User> users;

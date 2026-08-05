@@ -33,7 +33,7 @@ public class Post extends Content {
         return comments;
     }
 
-    public void vote(User voter, VoteType voteType) {
+    public synchronized void vote(User voter, VoteType voteType) {
 
         if (this.getAuthor().getId().equals(voter.getId())) {
             // user cannot vote on his own post
@@ -45,6 +45,10 @@ public class Post extends Content {
         }
 
         int voteChange = 0;
+        // following lines of code can emit something inappropriate
+        // in the multithreaded environment
+        // this is the reason I have used the 'synchronized' keyword
+        // in the method signature
         if (voters.containsKey(voter.getId())) {
             // user wants to change the type of vote
             voteChange = VoteType.UPVOTE.equals(voteType) ? 2 * VoteType.UPVOTE.getVal() : 2 * VoteType.DOWNVOTE.getVal();
