@@ -12,8 +12,12 @@ public class HasMoneyState extends VendingMachineState {
 
     @Override
     public void insertCoin(Coin coin) {
-        // invalid operation
-        System.out.println("Coin is already inserted");
+
+        // valid operation
+        int coinValue = coin.getValue();
+        vendingMachine.setBalanceAmount(vendingMachine.getBalanceAmount() + coinValue);
+        // already in HAS_MONEY_STATE so transition is required
+
     }
 
     @Override

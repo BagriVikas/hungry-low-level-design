@@ -14,15 +14,8 @@ public class ItemSelectedState extends VendingMachineState {
 
         // valid operation
         int coinValue = coin.getValue();
-        Item item = vendingMachine.getItem(vendingMachine.getSelectedItemId());
-        if (coinValue >= item.getPrice()) {
-            vendingMachine.setBalanceAmount(coinValue);
-            // transition to HAS_MONEY_STATE
-            vendingMachine.setState(new HasMoneyState(vendingMachine));
-        } else {
-            System.out.println("Not enough money");
-            vendingMachine.returnMoneyToUser();
-        }
+        vendingMachine.setBalanceAmount(vendingMachine.getBalanceAmount() + coinValue);
+        vendingMachine.setState(new HasMoneyState(vendingMachine));
 
     }
 
