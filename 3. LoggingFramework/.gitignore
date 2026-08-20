@@ -4,6 +4,7 @@ out/
 !**/src/test/**/out/
 .kotlin
 .idea
+3. LoggingFramework.iml
 
 ### Eclipse ###
 .apt_generated
