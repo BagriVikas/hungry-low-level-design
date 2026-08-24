@@ -1,6 +1,6 @@
-package formatter;
+package strategy.formatter;
 
-import message.LogMessage;
+import entity.LogMessage;
 
 public interface LogFormatter {
 

@@ -1,5 +1,0 @@
-{"level":"ERROR","msg":"This is a error level log msg","timestamp":"2026-08-23T13:58:37.645438600Z"}
-{"level":"ERROR","msg":"This is a error level log msg","timestamp":"2026-08-23T13:59:34.724763600Z"}
-{"level":"FATAL","msg":"This is a fatal level log msg","timestamp":"2026-08-23T13:59:34.969183400Z"}
-{"level":"ERROR","msg":"This is a error level log msg","timestamp":"2026-08-24T19:33:35.353485400Z"}
-{"level":"FATAL","msg":"This is a fatal level log msg","timestamp":"2026-08-24T19:33:35.695557600Z"}
