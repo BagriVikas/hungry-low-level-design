@@ -4,6 +4,7 @@ import appender.LogAppender;
 import enums.LogLevel;
 import message.LogMessage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class LogHandler {
@@ -11,6 +12,10 @@ public abstract class LogHandler {
     private LogHandler next;
 
     private List<LogAppender> appenders;
+
+    public LogHandler() {
+        appenders = new ArrayList<>();
+    }
 
     public abstract boolean handles(LogLevel level);
 
@@ -20,6 +25,10 @@ public abstract class LogHandler {
 
     public void setNext(LogHandler handler) {
         next = handler;
+    }
+
+    public LogHandler getNext() {
+        return next;
     }
 
     public void addAppender(LogAppender appender) {

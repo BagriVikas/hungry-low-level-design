@@ -23,7 +23,7 @@ public class FileLogAppender extends LogAppender {
                     java.nio.file.StandardOpenOption.APPEND
             );
         } catch (Exception e) {
-            System.out.println("Error occurred while trying to append log to the log file");
+            System.out.println("Error occurred while trying to append log to the log file: " + e.getMessage());
         }
 
     }
