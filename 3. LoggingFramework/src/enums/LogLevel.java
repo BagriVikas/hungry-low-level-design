@@ -14,4 +14,10 @@ public enum LogLevel {
         this.value = value;
     }
 
+    public int getValue() {return value;}
+
+    public boolean lessThanOrEqualTo(LogLevel level) {
+        return this.getValue() <= level.getValue();
+    }
+
 }
