@@ -23,7 +23,9 @@ public class LogManager {
         return INSTANCE;
     }
 
-    public Logger getLogger(String name) {
+    public Logger getRootLogger() {return rootLogger;}
+
+    public synchronized Logger getLogger(String name) {
 
         if (loggers.containsKey(name)) {
             return loggers.get(name);

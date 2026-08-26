@@ -16,7 +16,8 @@ public class Logger {
     public Logger(String name, Logger parent) {
         this.name = name;
         this.parent = parent;
-        appenders = new CopyOnWriteArrayList<>();
+        this.appenders = new CopyOnWriteArrayList<>();
+        this.additivity = true;
     }
 
     public String getName() {return name;}
@@ -32,16 +33,6 @@ public class Logger {
     }
 
     public List<LogAppender> getAppenders() {return appenders;}
-
-    public void log(String logMsg, LogLevel logLevel) {
-
-        LogLevel effectiveLogLevel = getEffectiveLogLevel();
-        if (effectiveLogLevel.lessThanOrEqualTo(logLevel)) {
-            // equally or more severe logs are processed
-            callAppenders(new LogMessage(logMsg, logLevel, this.name));
-        }
-
-    }
 
     private void callAppenders(LogMessage logMsg) {
 
@@ -66,6 +57,36 @@ public class Logger {
         // in the whole hierarchy
         return LogLevel.DEBUG; // DEFAULT: least severe log level
 
+    }
+
+    public void log(String logMsg, LogLevel logLevel) {
+
+        LogLevel effectiveLogLevel = getEffectiveLogLevel();
+        if (effectiveLogLevel.lessThanOrEqualTo(logLevel)) {
+            // equally or more severe logs are processed
+            callAppenders(new LogMessage(logMsg, logLevel, this.name));
+        }
+
+    }
+
+    public void debug(String msg) {
+        log(msg, LogLevel.DEBUG);
+    }
+
+    public void info(String msg) {
+        log(msg, LogLevel.INFO);
+    }
+
+    public void warn(String msg) {
+        log(msg, LogLevel.WARN);
+    }
+
+    public void error(String msg) {
+        log(msg, LogLevel.ERROR);
+    }
+
+    public void fatal(String msg) {
+        log(msg, LogLevel.FATAL);
     }
 
 }
