@@ -8,6 +8,7 @@ import state.MachineState;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class CoffeeMachine {
 
@@ -73,6 +74,15 @@ public class CoffeeMachine {
 
     }
 
+    public void reduceStockForIngredient(String ingredientName, int quantity) {
+
+        if (ingredientsStock.containsKey(ingredientName)) {
+            int currentQuantity = ingredientsStock.get(ingredientName).getQuantity();
+            ingredientsStock.get(ingredientName).setQuantity(currentQuantity - quantity);
+        }
+
+    }
+
     public void removeIngredient(String name) {
 
         if (ingredientsStock.containsKey(name)) {
@@ -109,8 +119,34 @@ public class CoffeeMachine {
 
     public boolean hasEnoughCoffeeIngredients(Coffee coffee) {
 
-        // TODO: implement logic to check whether coffee ingredients are available
-        return true;
+        boolean hasEnoughIngredientsAvailable = true;
+        for (Map.Entry<String, Integer> ingredientAndQuantity: coffee.getIngredients().entrySet()) {
+            String ingredient = ingredientAndQuantity.getKey();
+            int requiredQuantity = ingredientAndQuantity.getValue();
+            if (!ingredientsStock.containsKey(ingredient) || ingredientsStock.get(ingredient).getQuantity() < requiredQuantity) {
+                hasEnoughIngredientsAvailable = false;
+                break;
+            }
+        }
+        return hasEnoughIngredientsAvailable;
+
+    }
+
+    public void displayAvailableCoffees() {
+
+        for (Map.Entry<String, Coffee> nameAndCoffee: coffeeItems.entrySet()) {
+            String coffeeName = nameAndCoffee.getKey();
+            Coffee coffee = nameAndCoffee.getValue();
+            if (hasEnoughCoffeeIngredients(coffee)) {
+                System.out.println("Coffee: " + coffeeName + ", price: " + coffee.getPrice());
+                System.out.println("Ingredients: ");
+                String ingredientsList = coffee.getIngredients().keySet()
+                        .stream()
+                        .map(ingredient -> ingredient + "- " + coffee.getIngredients().get(ingredient))
+                        .collect(Collectors.joining(", "));
+                System.out.println(ingredientsList);
+            }
+        }
 
     }
 

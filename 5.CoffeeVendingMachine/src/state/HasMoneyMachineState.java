@@ -44,6 +44,8 @@ public class HasMoneyMachineState extends MachineState {
         if (coffeeMachine.getMoneyReceived() > coffeeMachine.getSelectedCoffee().getPrice()) {
             System.out.println("Returning money: " + (coffeeMachine.getMoneyReceived() - coffeeMachine.getSelectedCoffee().getPrice()));
         }
+        // reduce the amount of ingredients used
+        coffeeMachine.
         coffeeMachine.reset();
 
     }
