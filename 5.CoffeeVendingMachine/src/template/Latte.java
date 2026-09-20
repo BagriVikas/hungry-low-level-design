@@ -12,7 +12,8 @@ public class Latte extends Coffee {
                 11,
                 Map.of(
                         Ingredient.WATER, 4,
-                        Ingredient.COFFEE_BEANS, 8
+                        Ingredient.COFFEE_BEANS, 8,
+                        Ingredient.MILK, 5
                 )
         );
     }

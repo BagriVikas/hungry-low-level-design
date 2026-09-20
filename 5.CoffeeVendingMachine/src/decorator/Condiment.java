@@ -3,6 +3,7 @@ package decorator;
 import enums.Ingredient;
 import template.Coffee;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Condiment extends Coffee {
@@ -34,7 +35,8 @@ public abstract class Condiment extends Coffee {
     @Override
     public Map<Ingredient, Integer> getIngredients() {
 
-        Map<Ingredient, Integer> allIngredients = this.coffee.getIngredients();
+        Map<Ingredient, Integer> parentIngredients = this.coffee.getIngredients();
+        Map<Ingredient, Integer> allIngredients = new HashMap<>(parentIngredients);
         // add your own ingredients also
         for (Map.Entry<Ingredient, Integer> ingredients: super.getIngredients().entrySet()) {
             Ingredient ingredient = ingredients.getKey();

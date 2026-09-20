@@ -34,6 +34,8 @@ public class HasMoneyMachineState extends MachineState {
         // start preparing...
         this.getCoffeeVendingMachine().getSelectedCoffee().prepare();
         // once preparation is done
+        // update stock in inventory
+        this.getCoffeeVendingMachine().removeStock(this.getCoffeeVendingMachine().getSelectedCoffee().getIngredients());
         // refund money if required
         if (this.getCoffeeVendingMachine().getMoneyReceived() > this.getCoffeeVendingMachine().getSelectedCoffee().getCost()) {
             // refund

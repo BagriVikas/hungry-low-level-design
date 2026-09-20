@@ -49,8 +49,12 @@ public class CoffeeVendingMachine {
         inventory.addStock(ingredient, quantity);
     }
 
-    public void removeStock(Ingredient ingredient, int quantity) {
-        inventory.removeStock(ingredient, quantity);
+    public void removeStock(Map<Ingredient, Integer> ingredients) {
+
+        for (Map.Entry<Ingredient, Integer> ingredientAndQuant: ingredients.entrySet()) {
+            inventory.removeStock(ingredientAndQuant.getKey(), ingredientAndQuant.getValue());
+        }
+
     }
 
     public boolean hasEnoughStock(Map<Ingredient, Integer> requiredIngredients) {
