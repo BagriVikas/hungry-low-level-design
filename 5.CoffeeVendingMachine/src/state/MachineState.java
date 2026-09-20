@@ -1,21 +1,27 @@
 package state;
 
-import machine.CoffeeMachine;
+import enums.CoffeeType;
+import enums.CondimentType;
+import template.Coffee;
+
+import java.util.List;
 
 public abstract class MachineState {
 
-    protected CoffeeMachine coffeeMachine;
+    private CoffeeVendingMachine coffeeVendingMachine;
 
-    public MachineState(CoffeeMachine coffeeMachine) {
-        this.coffeeMachine = coffeeMachine;
+    public MachineState(CoffeeVendingMachine coffeeVendingMachine) {
+        this.coffeeVendingMachine = coffeeVendingMachine;
     }
 
-    public abstract void selectCoffee(String name);
+    public abstract void selectCoffee(CoffeeType coffeeType, List<CondimentType> condiments);
 
-    public abstract void insertCoin(int amount);
+    public abstract void insertCoin(int coin);
 
-    public abstract void refund();
+    public abstract void prepareCoffee();
 
-    public abstract void dispense();
+    public CoffeeVendingMachine getCoffeeVendingMachine() {
+        return this.coffeeVendingMachine;
+    }
 
 }

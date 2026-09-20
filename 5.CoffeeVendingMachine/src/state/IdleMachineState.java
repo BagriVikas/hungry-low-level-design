@@ -1,55 +1,53 @@
 package state;
 
-import entity.Coffee;
-import machine.CoffeeMachine;
+import decorator.Condiment;
+import enums.CoffeeType;
+import enums.CondimentType;
+import factory.CoffeeFactory;
+import factory.CondimentFactory;
+import template.Coffee;
+
+import java.util.List;
 
 public class IdleMachineState extends MachineState {
 
-    public IdleMachineState(CoffeeMachine coffeeMachine) {
-        super(coffeeMachine);
+    public IdleMachineState(CoffeeVendingMachine coffeeVendingMachine) {
+        super(coffeeVendingMachine);
     }
 
     @Override
-    public void selectCoffee(String name) {
+    public void selectCoffee(CoffeeType coffeeType, List<CondimentType> condiments) {
 
         // valid operation
-        Coffee coffee = coffeeMachine.getCoffee(name);
-        if (coffee == null) {
-            System.out.println("Currently, " + name + " is not available");
+        Coffee coffee = CoffeeFactory.getCoffee(coffeeType);
+        // apply all decorators or in other words
+        // add all required condiments
+        for (CondimentType condimentType: condiments) {
+            coffee = CondimentFactory.getCondiment(condimentType, coffee);
+        }
+        // check for all the required ingredients for both
+        // the base coffee and the added condiments
+        boolean hasEnoughStock = this.getCoffeeVendingMachine().hasEnoughStock(coffee.getIngredients());
+        if (!hasEnoughStock) {
+            System.out.println("Sorry!!! Currently all required ingredients are not available...");
             return;
         }
-        boolean hasEnoughIngredientsForCoffee = coffeeMachine.hasEnoughCoffeeIngredients(coffee);
-        if (hasEnoughIngredientsForCoffee) {
-            // proceed to the next stage
-            coffeeMachine.setSelectedCoffee(coffee);
-            coffeeMachine.setState(new CoffeeSelectedMachineState(coffeeMachine));
-        } else {
-            System.out.println("Currently, ingredients for " + name + " are not available");
-        }
+        // has enough ingredients for coffee
+        this.getCoffeeVendingMachine().setSelectedCoffee(coffee);
+        // transition to the next state
+        this.getCoffeeVendingMachine().setNextState(new SelectedCoffeeMachineState(this.getCoffeeVendingMachine()));
 
     }
 
     @Override
-    public void insertCoin(int amount) {
-
+    public void insertCoin(int coin) {
         // invalid operation
-        System.out.println("You have not selected any coffee yet!!!");
-
+        System.out.println("Please select a coffee first...");
     }
 
     @Override
-    public void refund() {
-
+    public void prepareCoffee() {
         // invalid operation
-        System.out.println("You have not inserted any coin yet!!!");
-
-    }
-
-    @Override
-    public void dispense() {
-
-        // invalid operation
-        System.out.println("You have not selected any coffee yet!!!");
-
+        System.out.println("Please select a coffee first...");
     }
 }

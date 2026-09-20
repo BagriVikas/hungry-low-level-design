@@ -1,53 +1,46 @@
 package state;
 
-import machine.CoffeeMachine;
+import enums.CoffeeType;
+import enums.CondimentType;
+
+import java.util.List;
 
 public class HasMoneyMachineState extends MachineState {
 
-    public HasMoneyMachineState(CoffeeMachine coffeeMachine) {
-        super(coffeeMachine);
+    public HasMoneyMachineState(CoffeeVendingMachine coffeeVendingMachine) {
+        super(coffeeVendingMachine);
     }
 
     @Override
-    public void selectCoffee(String name) {
-
+    public void selectCoffee(CoffeeType coffeeType, List<CondimentType> condiments) {
         // invalid operation
-        System.out.println("You have already selected a coffee!!!");
-
+        System.out.println("You have selected " + this.getCoffeeVendingMachine().getSelectedCoffee().getDescription() + " already!!!");
     }
 
     @Override
-    public void insertCoin(int amount) {
-
+    public void insertCoin(int coin) {
         // invalid operation
-        System.out.println("You have already inserted a coin");
-
+        System.out.println("You have already inserted the money");
     }
 
     @Override
-    public void refund() {
+    public void prepareCoffee() {
 
         // valid operation
-        System.out.println("Returning money: " + coffeeMachine.getMoneyReceived());
-        coffeeMachine.setState(new CoffeeSelectedMachineState(coffeeMachine));
-
-    }
-
-    @Override
-    public void dispense() {
-
-        // valid operation
-        // move to next state
-        coffeeMachine.setState(new DispensingMachineState(coffeeMachine));
-        System.out.println("Dispensing... " + coffeeMachine.getSelectedCoffee().getName());
-        // once dispensed refund money if required
-        if (coffeeMachine.getMoneyReceived() > coffeeMachine.getSelectedCoffee().getPrice()) {
-            System.out.println("Returning money: " + (coffeeMachine.getMoneyReceived() - coffeeMachine.getSelectedCoffee().getPrice()));
+        // start preparing the coffee
+        // but before starting the process
+        // first transition to the next state
+        this.getCoffeeVendingMachine().setNextState(new PreparingAndDispensingCoffeeMachineState(this.getCoffeeVendingMachine()));
+        // start preparing...
+        this.getCoffeeVendingMachine().getSelectedCoffee().prepare();
+        // once preparation is done
+        // refund money if required
+        if (this.getCoffeeVendingMachine().getMoneyReceived() > this.getCoffeeVendingMachine().getSelectedCoffee().getCost()) {
+            // refund
+            System.out.println("Refunding money: " + (this.getCoffeeVendingMachine().getMoneyReceived() - this.getCoffeeVendingMachine().getSelectedCoffee().getCost()));
         }
-        // reduce the amount of ingredients used
-        coffeeMachine.
-        coffeeMachine.reset();
+        // reset the machine
+        this.getCoffeeVendingMachine().reset();
 
     }
-
 }
