@@ -3,13 +3,18 @@ package state;
 import cor.ATMMenuOption;
 import entity.ATM;
 import entity.Card;
+import repository.CardRepository;
+import repository.impl.CardRepoImpl;
 
 public abstract class ATMState {
 
-    private ATM atm;
+    protected ATM atm;
+
+    protected CardRepository cardRepository;
 
     public ATMState(ATM atm) {
         this.atm = atm;
+        this.cardRepository = new CardRepoImpl();
     }
 
     public abstract void insertCard(Card card);

@@ -7,6 +7,7 @@ import repository.CardRepository;
 import java.util.HashMap;
 import java.util.Map;
 
+// IN-MEMORY data storage
 public class CardRepoImpl implements CardRepository {
 
     private final Map<String, Card> cards;

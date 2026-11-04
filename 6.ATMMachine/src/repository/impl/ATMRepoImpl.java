@@ -6,6 +6,7 @@ import repository.ATMRepository;
 import java.util.HashMap;
 import java.util.Map;
 
+// IN-MEMORY data storage
 public class ATMRepoImpl implements ATMRepository {
 
     private final Map<String, ATM> atms;

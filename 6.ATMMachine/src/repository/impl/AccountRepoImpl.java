@@ -6,9 +6,9 @@ import repository.AccountRepository;
 import java.util.HashMap;
 import java.util.Map;
 
+// IN-MEMORY data storage
 public class AccountRepoImpl implements AccountRepository {
 
-    // IN-MEMORY data storage
     private final Map<String, Account> accounts;
 
     public AccountRepoImpl() {

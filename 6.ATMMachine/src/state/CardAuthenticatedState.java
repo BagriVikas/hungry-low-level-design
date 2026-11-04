@@ -13,15 +13,32 @@ public class CardAuthenticatedState extends ATMState {
     @Override
     public void insertCard(Card card) {
 
+        // invalid operation
+        System.out.println("You already have inserted the card !!!");
+
     }
 
     @Override
     public void enterPin(String pin) {
 
+        // invalid operation
+        System.out.println("You already have entered the PIN !!!");
+
     }
 
     @Override
     public void selectOption(ATMMenuOption option) {
+
+        // set ATM state to 'ProcessingState' and then
+        // initiate the process
+        atm.setNextState(new ProcessingState(atm));
+        option.process();
+        // once process is complete
+        // return card
+        System.out.println("Please collect your card !!!");
+        atm.setCardReceived(null);
+        // transition ATM back to the 'IDLE' state again
+        atm.setNextState(new IdleState(atm));
 
     }
 
