@@ -2,6 +2,7 @@ package entity;
 
 import cor.ATMMenuOption;
 import state.ATMState;
+import state.IdleState;
 
 public class ATM {
 
@@ -16,6 +17,7 @@ public class ATM {
 
     public ATM(String id) {
         this.id = id;
+        this.state = new IdleState(this);
     }
 
     public void insertCard(Card card) {

@@ -2,12 +2,41 @@ package repository;
 
 import entity.Account;
 
-public interface AccountRepository {
+import java.util.HashMap;
+import java.util.Map;
 
-    void createAccount(String accNo, String accHolderName);
+// SINGLETON: IN-MEMORY data storage
+public class AccountRepository {
 
-    Account getAccount(String accNo);
+    private static final AccountRepository accountRepository = new AccountRepository();
+    private final Map<String, Account> accounts;
 
-    void updateAccount(Account account);
+    private AccountRepository () {
+        accounts = new HashMap<>();
+    }
+
+    public static AccountRepository getInstance() {
+        return accountRepository;
+    }
+
+    public Account createAccount(String accNo, String accHolderName) {
+
+        Account account = new Account(accNo, accHolderName);
+        account.setBalance(500);
+        accounts.put(accNo, account);
+        return account;
+
+    }
+
+    public Account getAccount(String accNo) {
+        return accounts.get(accNo);
+    }
+
+    public void updateAccount(Account account) {
+
+        // update BALANCE
+        accounts.put(account.getAccNo(), account);
+
+    }
 
 }

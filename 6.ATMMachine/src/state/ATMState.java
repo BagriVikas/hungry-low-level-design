@@ -4,7 +4,6 @@ import cor.ATMMenuOption;
 import entity.ATM;
 import entity.Card;
 import repository.CardRepository;
-import repository.impl.CardRepoImpl;
 
 public abstract class ATMState {
 
@@ -14,7 +13,7 @@ public abstract class ATMState {
 
     public ATMState(ATM atm) {
         this.atm = atm;
-        this.cardRepository = new CardRepoImpl();
+        this.cardRepository = CardRepository.getInstance();
     }
 
     public abstract void insertCard(Card card);

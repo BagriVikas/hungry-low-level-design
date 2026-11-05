@@ -43,7 +43,7 @@ public class Notes100Dispenser extends CashDispenser {
 
         // since whole amount is not fetched completely yet
         // try checking the same for the next cash dispenser
-        return canDispense(amount);
+        return nextCashDispenser.canDispense(amount);
 
     }
 }
